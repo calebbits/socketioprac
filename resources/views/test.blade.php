@@ -21,15 +21,14 @@
         //var socket = io('http://localhost:3000');
         var socket = io('http://127.0.0.1:3000');
         
-        $("#send").submit(function(){
-            $(this).defaultPrevented();
-            socket.emit("send",$("#message").val()); 
+        $("#send").submit(function(e){
+            e.preventDefault();
+            socket.emit("send message",$("#message").val()); 
             $("#message").val("");
         });
 
-        socket.on("send", function(message){
-            // increase the power everytime we load test route
-            $("#chatbox").append(message);
+        socket.on("new message", function(message){
+            $("#chatbox").append(message+"<br/>");
         });
         
         socket.on("test-channel:App\\Events\\Chat", function(message){
